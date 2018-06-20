@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<script src="Scripts/jquery-1.10.2.js"></script>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <table border="1">
+                    <tr>
+                        <th>
+                            <img src="http://muit.mahidol.ac.th/pic_hr_board/chayathat_p.jpg">
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>ชญาน์ทัต</td>
+                    </tr>
+                    <tr>
+                        <td><a href="account.frm_transfer.html">เช็คยอดเงิน</a>  </td>
+                    </tr>
+                    <tr>
+                        <td><a href="account.frm_transfer_complete.html">โอนเงิน</a>  </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <h1>โอนเงิน</h1>
+                <dev>
+                    <table border="1">
+                        <tr>
+                            <td valign="top">
+                                บัญชีผู้โอน : 
+                            </td>
+                            <td valign="top">&nbsp;&nbsp;
+                                <input type="text" id="fromAccountNo" value="123-456-789">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                บัญชีผู้รับโอน :
+                            </td>
+                            <td valign="top">
+                                &nbsp;&nbsp;
+                                <input type="text" id="toAccountNo" value="234-567-123">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                จำนวนเงินที่โอน :
+                            </td>
+                            <td valign="top">
+                                &nbsp;&nbsp;
+                                <input type="text" id="amount" value="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><button type="button">ยกเลิก</button>&nbsp;&nbsp;<button type="button" onclick="SetTransfer()">ตกลง</button></td>
+                        </tr>
+                    </table>
+               </dev>
+            </td>
+        </table>
+
+
+</body>
+</html>
+
+<script>
+
+    
+
+
+    function SetTransfer()
+    {
+        var _item = new Array();
+        var _username = "chayathat.pru";
+        var _fromAccountNo = document.getElementById("fromAccountNo").value;//$("#fromAccountNo").val();
+        var _toAccountNo = document.getElementById("toAccountNo").value; //$("#toAccountNo").val();
+        var _amount = document.getElementById("amount").value//$("#amount").val();
+
+        
+        _item.push({
+            username: _username
+            , fromAccountNo: _fromAccountNo
+            , toAccountNo: _toAccountNo
+            , amount: _amount
+        });
+        
+
+        
+
+        var _var = "action=SetTransfer&amt="+ _amount +"&itemList=" + JSON.stringify(_item);
+        
+        $.ajax({
+            url: "Service/Handler.ashx",
+            type: "Post",
+            data: _var,
+            dataType: "html",
+            charset: 'utf-8',
+            success: function (_data) {
+                alert(_data);
+                window.open("account.frm_transfer_complete.html");
+                //var _obj = JSON.parse(_data);
+
+                //$("#accountNo").val(_obj.accountNo);
+                //$("#amount").val(_obj.blcAmount);
+                //alert(_obj.firstname);
+
+            },
+            error: function (_e) {
+                alert(_e);
+            }
+        });
+    }
+</script>>
